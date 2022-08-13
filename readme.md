@@ -39,7 +39,7 @@ You can config which words you want enter to config.json file
 ##### Start Bot Code :
 ```
 node src/index
-
+```
 
 When bot end you get file named of theList.txt
 
