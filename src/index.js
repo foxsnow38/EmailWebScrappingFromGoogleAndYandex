@@ -200,7 +200,7 @@ const webScrapYandex =async (prompt) =>{
              await page.waitForTimeout(1000)
         }
         catch(err){
-         console.log(err)
+       
             pagenation= ``
         }
     
@@ -231,6 +231,17 @@ const webScrapYandex =async (prompt) =>{
              
              let  theGarbageData =  cleanData + ` ---- `+ garbageData // burda temiz olanida ekliyip tekrar taratiyorum
          cleanData  =  await theGarbageData.match(regex) 
+
+         for (let index = 0; index < cleanData.length; index++) {
+          let temporaryItem =cleanData[index]
+          cleanData =  cleanData.filter(filterItem=> filterItem != cleanData[index])
+              cleanData.push(temporaryItem)
+          
+         }
+          
+
+
+
         cleanData = cleanData.join(`,`)
         
         

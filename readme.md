@@ -1,4 +1,7 @@
 # Google And Yandex Email Scrapping
+
+###### Video: https://youtu.be/m_4JUzrIbMY
+
 Builded 13/Agust/22 can be not work to later years. if its not work,open issue.
 if I want, I can fix.
 
@@ -39,3 +42,8 @@ node src/index
 
 
 When bot end you get file named of theList.txt
+
+
+# Note :
+This Bot only Works On Turkish Language
+You should use Vpn Every 2 Tag after.
