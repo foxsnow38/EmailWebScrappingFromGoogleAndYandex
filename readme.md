@@ -42,6 +42,7 @@ node src/index
 ```
 
 When bot end you get file named of theList.txt
+If you want compare the older data inside to same one copy paste to oldestlist.txt inside. 
 
 
 # Note :

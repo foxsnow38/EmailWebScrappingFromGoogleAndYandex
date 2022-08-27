@@ -2,5 +2,6 @@
   "dependencies": {
     "puppeteer": "^16.1.0"
   },
-  "type": "module"
+  "type": "module",
+  "scripts": {"start": "node src/index.js"}
 }

@@ -216,39 +216,50 @@ const webScrapYandex =async (prompt) =>{
     
 
  const createListOfEmail = async (garbageData)=>{
-        const regex = /([a-zA-Z0-9-]+@[a-zA-Z0-9-]+\.[a-zA-Z]+-?(\.[a-zA-Z]+))/g // tek datalarda global flagi kaldirmazssaniz hata alirsiniz
-        let  cleanData = ``
+  const regex = /([a-zA-Z0-9-]+@[a-zA-Z0-9-]+\.[a-zA-Z]+(\.[a-zA-Z]+)?)/g // tek datalarda global flagi kaldirmazssaniz hata alirsiniz
+  let  cleanData = ``
+  let oldestData =``
+  try{
+    oldestData = fs.readFileSync(`./oldestList.txt`,{encoding:"utf-8"}).match(regex)
+  }
+  catch{
+    fs.writeFileSync(`./oldestList.txt`,``,{encoding:"utf-8"})
+  }
+ 
+  try{
+       cleanData = fs.readFileSync(`./theList.txt`,{encoding:"utf-8"})
+      
+
+       }
+       catch{
+         
+       }
+  
        
-        try{
-             cleanData = fs.readFileSync(`./theList.txt`,cleanData,{encoding:"utf-8"})
-            
+       let  theGarbageData =  cleanData + ` ---- `+ garbageData // burda temiz olanida ekliyip tekrar taratiyorum
+   cleanData  =  await theGarbageData.match(regex) 
 
-             }
-             catch{
-               
-             }
-        
-             
-             let  theGarbageData =  cleanData + ` ---- `+ garbageData // burda temiz olanida ekliyip tekrar taratiyorum
-         cleanData  =  await theGarbageData.match(regex) 
+   for (let index = 0; index < cleanData.length; index++) {
+    let temporaryItem =cleanData[index]
+    cleanData =  cleanData.filter(filterItem=> filterItem != cleanData[index])
+        cleanData.push(temporaryItem)
+        // cleaning same one
+    
+   }
 
-         for (let index = 0; index < cleanData.length; index++) {
-          let temporaryItem =cleanData[index]
-          cleanData =  cleanData.filter(filterItem=> filterItem != cleanData[index])
-              cleanData.push(temporaryItem)
-          
-         }
-          
+   let filter
+   filter= cleanData.filter(item => !oldestData.includes(item))
+
+    
 
 
 
-        cleanData = cleanData.join(`,`)
-        
-        
-        
-        
-        fs.writeFileSync(`./theList.txt`,cleanData,{encoding:"utf-8"})
-        
+  cleanData = filter.join(`,`)
+  
+  
+  
+  
+   fs.writeFileSync(`./theList.txt`,cleanData,{encoding:"utf-8"})
         
         }
 
@@ -263,18 +274,15 @@ for (let index = 0; index < thePromptList[0].searchSettings.length ; index++) {
 try{
     console.log(`Scrapping: ${thePromptList[0].searchSettings[index]}`)
     theWebScrappingListDatas += await  webScrapGoogle(`${thePromptList[0].searchSettings[index]}`)
-    theWebScrappingListDatas += await  webScrapYandex(`${thePromptList[0].searchSettings[index]}`)
+     theWebScrappingListDatas += await  webScrapYandex(`${thePromptList[0].searchSettings[index]}`)
     await createListOfEmail(theWebScrappingListDatas)
     
 }
 catch(e){
     console.log(e)
 }
-
 }
-
 }
-
 scrapListFunc()
 
 
